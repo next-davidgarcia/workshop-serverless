@@ -1,0 +1,7 @@
+.idea
+.config
+.serverless
+deploy.out
+config
+node_modules
+.old.serverless

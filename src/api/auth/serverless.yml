@@ -1,0 +1,25 @@
+auth-create-user:
+  name: ${self:custom.funcPrefix}-auth-create-user
+  handler: src/api/auth/index.createUser
+  events:
+  - http:
+      path: auth
+      method: post
+      cors: ${self:custom.cors.${self:provider.stage}, false}
+auth-login:
+  name: ${self:custom.funcPrefix}-auth-login
+  handler: src/api/auth/index.login
+  events:
+  - http:
+      path: auth/login
+      method: post
+      cors: ${self:custom.cors.${self:provider.stage}, false}
+auth-me:
+  name: ${self:custom.funcPrefix}-auth-me
+  handler: src/api/auth/index.me
+  events:
+  - http:
+      path: auth/me
+      method: get
+      cors: ${self:custom.cors.${self:provider.stage}, false}
+      authorizer: ${self:custom.authorizer.user}

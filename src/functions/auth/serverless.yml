@@ -1,0 +1,6 @@
+auth-user:
+  name: ${self:custom.funcPrefix}-auth-user
+  handler: src/functions/auth/index.user
+auth-admin:
+  name: ${self:custom.funcPrefix}-auth-admin
+  handler: src/functions/auth/index.admin

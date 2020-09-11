@@ -1,0 +1,8 @@
+STAGE: ${self:provider.stage}
+REGION: ${self:custom.region.${self:provider.stage}}
+#AUTH_USER_POOL: ${self:custom.resources.userPool.${self:provider.stage}}
+#AUTH_USER_CLIENT: ${self:custom.resources.userClient.${self:provider.stage}}
+AUTH_SECRET: ${self:custom.secrets.${self:provider.stage}.AUTH_SECRET, 'unSecretoParaLocal'}
+POSTS_TABLE: ${self:custom.resources.postTable.${self:provider.stage}}
+USERS_TABLE: ${self:custom.resources.userTable.${self:provider.stage}}
+VALID_DOMAINS: ${self:custom.validDomains.${self:provider.stage}}

@@ -1,0 +1,43 @@
+posts-list:
+  name: ${self:custom.funcPrefix}-posts-list
+  handler: src/api/public/posts/index.list
+  events:
+  - http:
+      path: ${self:custom.publicApiPrefix}/posts
+      method: get
+      cors: ${self:custom.cors.${self:provider.stage}, false}
+posts-get:
+  name: ${self:custom.funcPrefix}-posts-get
+  handler: src/api/public/shops/index.get
+  events:
+  - http:
+      path: ${self:custom.publicApiPrefix}/posts/{slug}
+      method: get
+      cors: ${self:custom.cors.${self:provider.stage}, false}
+posts-create:
+  name: ${self:custom.funcPrefix}-posts-create
+  handler: src/api/public/shops/index.post
+  events:
+  - http:
+      path: ${self:custom.publicApiPrefix}/posts
+      method: post
+      cors: ${self:custom.cors.${self:provider.stage}, false}
+      authorizer: ${self:custom.authorizer.user}
+posts-update:
+  name: ${self:custom.funcPrefix}-posts-update
+  handler: src/api/public/shops/index.put
+  events:
+  - http:
+      path: ${self:custom.publicApiPrefix}/posts/{slug}
+      method: put
+      cors: ${self:custom.cors.${self:provider.stage}, false}
+      authorizer: ${self:custom.authorizer.user}
+posts-delete:
+  name: ${self:custom.funcPrefix}-posts-delete
+  handler: src/api/public/shops/index.del
+  events:
+  - http:
+      path: ${self:custom.publicApiPrefix}/posts/{slug}
+      method: delete
+      cors: ${self:custom.cors.${self:provider.stage}, false}
+      authorizer: ${self:custom.authorizer.user}

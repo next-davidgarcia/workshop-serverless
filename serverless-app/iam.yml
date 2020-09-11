@@ -1,0 +1,8 @@
+- Effect: Allow
+  Action:
+  - cognito-idp:*
+  Resource: "*"
+- Effect: Allow
+  Action:
+  - dynamodb:*
+  Resource: "*"

@@ -1,0 +1,32 @@
+service: ${file(./package.json):name}
+frameworkVersion: ">=1.34.0 <2.0.0"
+package:
+  individually: false
+custom: ${file(./serverless-app/custom.yml)}
+resources: ${file(./serverless-app/resources.yml)}
+provider:
+  name: aws
+  runtime: nodejs12.x
+  versionFunctions: false
+  stage: ${opt:stage, 'local'}
+  region: ${self:custom.region.${self:provider.stage}}
+  iamRoleStatements: ${file(./serverless-app/iam.yml)}
+  deploymentPrefix: ${self:custom.deployment.folder}
+  deploymentBucket:
+    name: ${self:custom.deployment.bucket}
+    blockPublicAccess: true
+  stackTags: # Optional CF stack tags
+    project: ${self:service}
+    env: ${opt:stage, 'local'}
+  tracing:
+    apiGateway: true
+    lambda: true # Optional, can be true (true equals 'Active'), 'Active' or 'PassThrough'
+  environment: ${file(./serverless-app/environment.yml)}
+functions: ${file(./serverless-app/functions.yml)}
+plugins:
+- serverless-offline
+- serverless-pseudo-parameters
+- serverless-nested-stack
+- serverless-plugin-log-retention
+- serverless-deployment-bucket
+# - serverless-plugin-split-stacks

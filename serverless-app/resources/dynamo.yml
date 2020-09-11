@@ -1,0 +1,23 @@
+Resources:
+  PostTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      TableName: ${self:custom.resources.postTable}
+      AttributeDefinitions:
+      - AttributeName: "slug"
+        AttributeType: "S"
+      KeySchema:
+      - AttributeName: "slug"
+        KeyType: "HASH"
+  UserTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      TableName: ${self:custom.resources.userTable}
+      AttributeDefinitions:
+      - AttributeName: "email"
+        AttributeType: "S"
+      KeySchema:
+      - AttributeName: "email"
+        KeyType: "HASH"

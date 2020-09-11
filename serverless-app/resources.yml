@@ -1,0 +1,3 @@
+- ${file(./serverless-app/resources/api-gateway.yml)}
+- ${file(./serverless-app/resources/dynamo.yml)}
+- ${file(./serverless-app/resources/outputs.yml)}

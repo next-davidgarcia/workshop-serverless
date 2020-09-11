@@ -1,0 +1,59 @@
+{
+  "name": "next-handson-serverless",
+  "version": "1.0.0",
+  "description": "API Serverless",
+  "private": false,
+  "author": "BBVA Next Technologies",
+  "license": "ISC",
+  "scripts": {
+    "start": "AWS_SDK_LOAD_CONFIG=true serverless offline",
+    "local": "AWS_SDK_LOAD_CONFIG=true serverless offline",
+    "deploy:dev": "AWS_SDK_LOAD_CONFIG=true serverless deploy --stage dev",
+    "deploy:pre": "AWS_SDK_LOAD_CONFIG=true serverless deploy --stage pre",
+    "deploy:pro": "AWS_SDK_LOAD_CONFIG=true serverless deploy --stage pro",
+    "remove:local": "AWS_SDK_LOAD_CONFIG=true serverless remove --stage dev",
+    "remove:dev": "AWS_SDK_LOAD_CONFIG=true serverless remove --stage dev",
+    "remove:pre": "AWS_SDK_LOAD_CONFIG=true serverless remove --stage pre",
+    "test-local-server": "AWS_SDK_LOAD_CONFIG=true serverless offline --port 3000",
+    "test-ci-server": "AWS_SDK_LOAD_CONFIG=true serverless offline --port 3000",
+    "test": "jest",
+    "test-ci": "node ./src/testing/jest.js"
+  },
+  "dependencies": {
+    "amazon-cognito-identity-js": "^4.2.2",
+    "aws-sdk": "latest",
+    "dynamodb": "^1.2.1",
+    "fetch": "^1.1.0",
+    "joi": "^14.3.1",
+    "jsonwebtoken": "latest",
+    "lodash": "^4.17.20",
+    "module-alias": "latest",
+    "node-fetch": "^2.6.1",
+    "npm": "^6.14.8",
+    "xss": "^1.0.6"
+  },
+  "devDependencies": {
+    "get-urls": "latest",
+    "jest": "latest",
+    "jest-cli": "latest",
+    "jest-dev-server": "latest",
+    "serverless": "latest",
+    "serverless-deployment-bucket": "^1.1.2",
+    "serverless-nested-stack": "0.0.7",
+    "serverless-offline": "latest",
+    "serverless-plugin-log-retention": "^2.0.0",
+    "serverless-plugin-split-stacks": "^1.9.3",
+    "serverless-pseudo-parameters": "^2.5.0"
+  },
+  "jest": {
+    "verbose": true,
+    "globalSetup": "./src/testing/global-setup.js",
+    "globalTeardown": "./src/testing/global-teardown.js"
+  },
+  "_moduleAliases": {
+    "lib": "src/lib",
+    "model": "src/models",
+    "constants": "src/constants",
+    "app": "src/lib/app"
+  }
+}

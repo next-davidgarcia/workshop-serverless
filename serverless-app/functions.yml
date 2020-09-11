@@ -1,0 +1,3 @@
+- ${file(./src/api/posts/serverless.yml)}
+- ${file(./src/api/auth/serverless.yml)}
+- ${file(./src/functions/auth/serverless.yml)}

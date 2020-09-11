@@ -1,0 +1,66 @@
+funcPrefix: ${self:service}-${self:provider.stage}
+region:
+  local: us-east-1
+  dev: us-east-1
+  pre: us-east-1
+  pro: us-east-1
+
+stage: ${self:provider.stage}
+varPrefix: next-handson-${self:provider.stage}
+publicApiPrefix: api
+secrets:
+  dev: ${ssm:/aws/reference/secretsmanager/${self:service.name}-${self:provider.stage}~true}
+  pre: ${ssm:/aws/reference/secretsmanager/${self:service.name}-${self:provider.stage}~true}
+  pro: ${ssm:/aws/reference/secretsmanager/${self:service.name}-${self:provider.stage}~true}
+  local: ${ssm:/aws/reference/secretsmanager/${self:service.name}-dev~true}
+deployment:
+  bucket: aws-handson-deployments-${self:provider.stage}
+  folder: ${self:service}-${self:provider.stage}
+cors:
+  local: true
+  dev: true
+  pre: false
+  pro: false
+resources:
+#  userPool:
+#    local: 'us-east-1_7wD6fdlap'
+#    dev:
+#      "Fn::ImportValue": ${self:custom.varPrefix}-cognito-user-pool
+#    pre:
+#      "Fn::ImportValue": ${self:custom.varPrefix}-cognito-user-pool
+#    pro:
+#      "Fn::ImportValue": ${self:custom.varPrefix}-cognito-user-pool
+#  userClient:
+#    local: '6r746v4lfelonaof4480vav16h'
+#    dev:
+#      "Fn::ImportValue": ${self:custom.varPrefix}-cognito-user-client
+#    pre:
+#      "Fn::ImportValue": ${self:custom.varPrefix}-cognito-user-client
+#    pro:
+#      "Fn::ImportValue": ${self:custom.varPrefix}-cognito-user-client
+  postTable: ${self:custom.varPrefix}-posts-table
+  userTable: ${self:custom.varPrefix}-users-table
+authorizer:
+  user:
+    name: auth-user
+    type: token
+    identitySource: method.request.header.Authorization
+    identityValidationExpression: Bearer (.*)
+    resultTtlInSeconds: 0
+  admin:
+    name: auth-admin
+    type: token
+    identitySource: method.request.header.Authorization
+    identityValidationExpression: Bearer (.*)
+    resultTtlInSeconds: 0
+validDomains:
+  local: "null"
+  dev: "null"
+  pre: "null"
+  pro: "null"
+#splitStacks:
+#  nestedStackCount: 8 # Controls the number of created nested stacks
+#  perFunction: false
+#  perType: true
+#  perGroupFunction: false
+logRetentionInDays: 14

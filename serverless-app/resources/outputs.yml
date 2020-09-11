@@ -1,0 +1,6 @@
+Outputs:
+  ApiEndpoint:
+    Value:
+      Ref: ApiGatewayRestApi
+    Export:
+      Name: ${self:custom.varPrefix}-api-id

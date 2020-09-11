@@ -1,0 +1,50 @@
+# IMPORTANTE se usa cognito custom att. como plugin de serverless. Ver atts en CUSTOM
+Resources:
+  CognitoUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      MfaConfiguration: OFF
+      UserPoolName: ${self:custom.resources.cognitoPool}
+      UsernameConfiguration:
+        CaseSensitive: False
+      UsernameAttributes:
+      - email
+      Schema:
+      - Name: email
+        Required: TRUE
+        AttributeDataType: String
+        Mutable: TRUE
+      - Name: name
+        Required: TRUE
+        AttributeDataType: String
+        Mutable: TRUE
+      - Name: middle_name
+        Required: TRUE
+        Mutable: TRUE
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 8
+          RequireLowercase: TRUE
+          RequireNumbers: TRUE
+          RequireSymbols: FALSE
+          RequireUppercase: TRUE
+  CognitoUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: ${self:custom.resources.cognitoClient}
+      UserPoolId:
+        Ref: CognitoUserPool
+      ExplicitAuthFlows:
+      - ADMIN_NO_SRP_AUTH
+      GenerateSecret: FALSE
+  CognitoGroup:
+    Type: AWS::Cognito::UserPoolGroup
+    Properties:
+      Description: "Admin group"
+      GroupName: "admin"
+      Precedence: 0
+      UserPoolId:
+        Ref: CognitoUserPool
+
+
+
