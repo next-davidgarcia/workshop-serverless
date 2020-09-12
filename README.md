@@ -36,7 +36,16 @@ Tan sencillo (con los pasos previos) como...
 npm start
 ```
 
+## Borrar el entorno
+
+Un único comando borra todos los recursos salvo el bucket utilizado para desplegar los stacks.
+```
+npm run remove:dev
+```
+
 ###### Notas
 
 - El paginado no funcionará correctamente en el frontal debido a que no funciona por páginas, lo hace por última clave
  y el frontal no se ha actualizado.
+- **TODOS** los servicios utilizados en este workshop tarifican en **pago por uso**, por lo que con la capa gratuita debería de ser
+suficiente para no incurrir en gastos más allá del almacenamiento de DynamoDB cuyo coste sería residual.
