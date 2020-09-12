@@ -48,10 +48,6 @@ async function list ({ size = 20, last }) {
             size = parseInt(size);
             const query = Posts.scan().limit(size);
 
-            if (status !== false) {
-                query.filter('status').equals(status);
-            }
-
             if (last) {
                 query.startKey({ slug: last });
             }

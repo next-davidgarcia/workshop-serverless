@@ -11,7 +11,8 @@ module.exports.list = async (event, context) => {
         const data = await listPosts({ last, size });
         return request.response({
             code: 200,
-            data
+            data: data.items,
+            last: data.last,
         });
     } catch (error) {
         return request.error({ error });
@@ -40,6 +41,8 @@ module.exports.post = async (event, context) => {
     const request = app.request({ context, event });
     try {
         const item = request.body;
+        const user = request.getLoggedUser();
+        item.user = user.email;
         const data = await createPost({ item });
         return request.response({
             code: 201,

@@ -1,6 +1,6 @@
 posts-list:
   name: ${self:custom.funcPrefix}-posts-list
-  handler: src/api/public/posts/index.list
+  handler: src/api/posts/index.list
   events:
   - http:
       path: ${self:custom.publicApiPrefix}/posts
@@ -8,7 +8,7 @@ posts-list:
       cors: ${self:custom.cors.${self:provider.stage}, false}
 posts-get:
   name: ${self:custom.funcPrefix}-posts-get
-  handler: src/api/public/shops/index.get
+  handler: src/api/posts/index.get
   events:
   - http:
       path: ${self:custom.publicApiPrefix}/posts/{slug}
@@ -16,7 +16,7 @@ posts-get:
       cors: ${self:custom.cors.${self:provider.stage}, false}
 posts-create:
   name: ${self:custom.funcPrefix}-posts-create
-  handler: src/api/public/shops/index.post
+  handler: src/api/posts/index.post
   events:
   - http:
       path: ${self:custom.publicApiPrefix}/posts
@@ -25,7 +25,7 @@ posts-create:
       authorizer: ${self:custom.authorizer.user}
 posts-update:
   name: ${self:custom.funcPrefix}-posts-update
-  handler: src/api/public/shops/index.put
+  handler: src/api/posts/index.put
   events:
   - http:
       path: ${self:custom.publicApiPrefix}/posts/{slug}
@@ -34,7 +34,7 @@ posts-update:
       authorizer: ${self:custom.authorizer.user}
 posts-delete:
   name: ${self:custom.funcPrefix}-posts-delete
-  handler: src/api/public/shops/index.del
+  handler: src/api/posts/index.del
   events:
   - http:
       path: ${self:custom.publicApiPrefix}/posts/{slug}

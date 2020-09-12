@@ -38,8 +38,16 @@ resources:
 #      "Fn::ImportValue": ${self:custom.varPrefix}-cognito-user-client
 #    pro:
 #      "Fn::ImportValue": ${self:custom.varPrefix}-cognito-user-client
-  postTable: ${self:custom.varPrefix}-posts-table
-  userTable: ${self:custom.varPrefix}-users-table
+  postTable:
+    local: next-handson-dev-posts-table
+    dev: ${self:custom.varPrefix}-posts-table
+    pre: ${self:custom.varPrefix}-posts-table
+    pro: ${self:custom.varPrefix}-posts-table
+  userTable:
+    local: next-handson-dev-users-table
+    dev: ${self:custom.varPrefix}-users-table
+    pre: ${self:custom.varPrefix}-users-table
+    pro: ${self:custom.varPrefix}-users-table
 authorizer:
   user:
     name: auth-user

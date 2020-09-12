@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { intersection } = require('lodash');
-const { AUTH_TOKEN_SECRET } = require('constants');
+const { AUTH_TOKEN_SECRET, AUTH_TOKEN_DURATION } = require('constants');
 
 function getToken(user) {
     return jwt.sign({

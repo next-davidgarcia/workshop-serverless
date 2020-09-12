@@ -45,11 +45,13 @@ async function getItem({ email }) {
 async function postItem({ item }) {
     const old = (await getItem({ email: item.email })).item;
     if (old === null) {
-        item.password = await auth.getHash({ text: item.password });
+        item.password = (await auth.getHash({ text: item.password })).hash;
         await validate(item);
         const elem = new Users(item);
         await elem.save();
-        return { item: parseDynamoItem(item) };
+        const result = parseDynamoItem(item);
+        delete result.password;
+        return { item: result };
     } else {
         throw CustomError('Duplicated', 412);
     }
@@ -58,8 +60,8 @@ async function postItem({ item }) {
 async function login({ email, password }) {
     const user = (await getItem({ email })).item;
     if (user !== null) {
-        const isAuth = await auth.checkHash({ text: password, hash: user.password });
-        if (isAuth === true) {
+        const { result } = await auth.checkHash({ text: password, hash: user.password });
+        if (result === true) {
             delete user.password;
             const token = auth.getToken(user);
             return { user, token };

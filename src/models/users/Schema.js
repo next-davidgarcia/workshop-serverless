@@ -12,6 +12,7 @@ const schema = {
     name: Joi.string().required(),
     surname: Joi.string().required(),
     password: Joi.string().required(),
+    roles: Joi.array().items(Joi.string()).required(),
 };
 
 
@@ -22,10 +23,14 @@ const dynamoSchema = {
 };
 
 for (let key in schema) {
-    dynamoSchema.schema[key] = schema[key];
+    if (['roles'].includes(key) === true) {
+        dynamoSchema.schema[key] = dynamo.types.stringSet();
+    } else {
+        dynamoSchema.schema[key] = schema[key];
+    }
 }
 
-const Posts = dynamo.define(POSTS_TABLE, dynamoSchema);
+const Users = dynamo.define(USERS_TABLE, dynamoSchema);
 
 
 const Schema = Joi.object().keys(schema);

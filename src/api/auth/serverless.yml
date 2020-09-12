@@ -3,7 +3,7 @@ auth-create-user:
   handler: src/api/auth/index.createUser
   events:
   - http:
-      path: auth
+      path: ${self:custom.publicApiPrefix}/auth
       method: post
       cors: ${self:custom.cors.${self:provider.stage}, false}
 auth-login:
@@ -11,7 +11,7 @@ auth-login:
   handler: src/api/auth/index.login
   events:
   - http:
-      path: auth/login
+      path: ${self:custom.publicApiPrefix}/auth/login
       method: post
       cors: ${self:custom.cors.${self:provider.stage}, false}
 auth-me:
@@ -19,7 +19,7 @@ auth-me:
   handler: src/api/auth/index.me
   events:
   - http:
-      path: auth/me
+      path: ${self:custom.publicApiPrefix}/auth/me
       method: get
       cors: ${self:custom.cors.${self:provider.stage}, false}
       authorizer: ${self:custom.authorizer.user}

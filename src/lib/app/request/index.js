@@ -173,12 +173,12 @@ module.exports = class Request {
         }
     }
 
-    response({ data = false, code = 200, count = false, msg = false, headers = {}}) {
+    response({ data = false, code = 200, last = false, msg = false, headers = {}}) {
         try {
             // pillar token si hay y poner en headers
             const out = {};
-            if (count !== false) {
-                out.count = count;
+            if (last !== false) {
+                out.last = last;
             }
             if (data !== false) {
                 out.data = data;
@@ -189,6 +189,7 @@ module.exports = class Request {
             if (msg !== false) {
                 out.message = msg;
             }
+            out.code = code;
             this.log.info('Response finished', code);
             return {
                 headers: this._parseResponseHeaders(headers),

@@ -13,7 +13,7 @@ const schema = {
     title: Joi.string().required(),
     description: Joi.string(),
     text: Joi.string().required(),
-    user: Joi.string().required(),
+    user: Joi.string().email().required(),
     tags: Joi.array().items(Joi.string()).required(),
 };
 

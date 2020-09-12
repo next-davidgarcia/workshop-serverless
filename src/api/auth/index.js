@@ -28,6 +28,7 @@ module.exports.me = async (event, context) => {
         const { email } = request.getLoggedUser();
         const { item } = await getUser({ email });
         if (item !== null) {
+            delete item.password;
             return request.response({
                 code: 200,
                 data: item,
@@ -48,10 +49,12 @@ module.exports.createUser = async (event, context) => {
         const data = await getUser({ email });
         if (data.item === null) {
             item.email = email;
+            item.roles = ['user'];
             item.password = password;
-            await createUser({ item });
+            const data = await createUser({ item });
             return request.response({
-                code: 201
+                code: 201,
+                data: data.item,
             });
         } else {
             throw CustomError('Duplicated', 409);

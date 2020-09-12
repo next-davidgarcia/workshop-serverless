@@ -28,3 +28,15 @@ Este paso es necesario para trabajar en local ya que genera las tablas de Dynamo
 ```
 npm run deploy:dev
 ```
+
+## Trabajar en local
+
+Tan sencillo (con los pasos previos) como...
+```
+npm start
+```
+
+###### Notas
+
+- El paginado no funcionará correctamente en el frontal debido a que no funciona por páginas, lo hace por última clave
+ y el frontal no se ha actualizado.

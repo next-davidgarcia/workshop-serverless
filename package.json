@@ -6,7 +6,7 @@
   "author": "BBVA Next Technologies",
   "license": "ISC",
   "scripts": {
-    "start": "AWS_SDK_LOAD_CONFIG=true serverless offline",
+    "start": "npm run local",
     "local": "AWS_SDK_LOAD_CONFIG=true serverless offline",
     "deploy:dev": "AWS_SDK_LOAD_CONFIG=true serverless deploy --stage dev",
     "deploy:pre": "AWS_SDK_LOAD_CONFIG=true serverless deploy --stage pre",
@@ -22,6 +22,7 @@
   "dependencies": {
     "amazon-cognito-identity-js": "^4.2.2",
     "aws-sdk": "latest",
+    "bcrypt": "^5.0.0",
     "dynamodb": "^1.2.1",
     "fetch": "^1.1.0",
     "joi": "^14.3.1",
