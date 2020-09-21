@@ -3,7 +3,7 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       BillingMode: PAY_PER_REQUEST
-      TableName: ${self:custom.resources.postTable}
+      TableName: ${self:custom.resources.postTable.${self:provider.stage}}
       AttributeDefinitions:
       - AttributeName: "slug"
         AttributeType: "S"
@@ -14,7 +14,7 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       BillingMode: PAY_PER_REQUEST
-      TableName: ${self:custom.resources.userTable}
+      TableName: ${self:custom.resources.userTable.${self:provider.stage}}
       AttributeDefinitions:
       - AttributeName: "email"
         AttributeType: "S"
