@@ -31,6 +31,7 @@
     "module-alias": "latest",
     "node-fetch": "^2.6.1",
     "npm": "^6.14.8",
+    "short-uuid": "^4.1.0",
     "xss": "^1.0.6"
   },
   "devDependencies": {

@@ -79,7 +79,6 @@ async function list ({ size = 20, last }) {
 
 async function putItem({ item, slug }) {
     const old = (await getItem({ slug })).item;
-    // hacer check de todo
     if (old !== null) {
         item.slug = slug;
         await validate(item);
@@ -91,7 +90,7 @@ async function putItem({ item, slug }) {
 }
 
 async function postItem({ item }) {
-    item.slug = sanitizeSlug(item.slug);
+    item.slug = sanitizeSlug(item.title);
     const old = (await getItem({ slug: item.slug })).item;
     if (old === null) {
         await validate(item);

@@ -44,13 +44,12 @@ module.exports.me = async (event, context) => {
 module.exports.createUser = async (event, context) => {
     const request = app.request({ context, event });
     try {
-        const { email, password } = request.body;
+        const { email } = request.body;
         const item = request.body;
         const data = await getUser({ email });
         if (data.item === null) {
             item.email = email;
             item.roles = ['user'];
-            item.password = password;
             const data = await createUser({ item });
             return request.response({
                 code: 201,

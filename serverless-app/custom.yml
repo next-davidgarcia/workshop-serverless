@@ -22,32 +22,25 @@ cors:
   pre: false
   pro: false
 resources:
-#  userPool:
-#    local: 'us-east-1_7wD6fdlap'
-#    dev:
-#      "Fn::ImportValue": ${self:custom.varPrefix}-cognito-user-pool
-#    pre:
-#      "Fn::ImportValue": ${self:custom.varPrefix}-cognito-user-pool
-#    pro:
-#      "Fn::ImportValue": ${self:custom.varPrefix}-cognito-user-pool
-#  userClient:
-#    local: '6r746v4lfelonaof4480vav16h'
-#    dev:
-#      "Fn::ImportValue": ${self:custom.varPrefix}-cognito-user-client
-#    pre:
-#      "Fn::ImportValue": ${self:custom.varPrefix}-cognito-user-client
-#    pro:
-#      "Fn::ImportValue": ${self:custom.varPrefix}-cognito-user-client
+  userPool:
+    local: 'us-east-1_okkcmFnNz'
+    dev: 'us-east-1_okkcmFnNz'
+    pre:
+      "Fn::ImportValue": ${self:custom.varPrefix}-cognito-user-pool
+    pro:
+      "Fn::ImportValue": ${self:custom.varPrefix}-cognito-user-pool
+  userClient:
+    local: '63mdqge21rb9mot0pe0g1tmtil'
+    dev: '63mdqge21rb9mot0pe0g1tmtil'
+    pre:
+      "Fn::ImportValue": ${self:custom.varPrefix}-cognito-user-client
+    pro:
+      "Fn::ImportValue": ${self:custom.varPrefix}-cognito-user-client
   postTable:
     local: next-handson-dev-posts-table
     dev: ${self:custom.varPrefix}-posts-table
     pre: ${self:custom.varPrefix}-posts-table
     pro: ${self:custom.varPrefix}-posts-table
-  userTable:
-    local: next-handson-dev-users-table
-    dev: ${self:custom.varPrefix}-users-table
-    pre: ${self:custom.varPrefix}-users-table
-    pro: ${self:custom.varPrefix}-users-table
 authorizer:
   user:
     name: auth-user
