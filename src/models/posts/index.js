@@ -91,7 +91,7 @@ async function putItem({ item, slug }) {
 }
 
 async function postItem({ item }) {
-    item.slug = sanitizeSlug(item.slug);
+    item.slug = sanitizeSlug(item.title);
     const old = (await getItem({ slug: item.slug })).item;
     if (old === null) {
         await validate(item);
