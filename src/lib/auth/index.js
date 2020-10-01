@@ -27,4 +27,4 @@ function isAuth (userRoles = [], roles = []) {
     }
 }
 
-module.exports = { getHash, checkHash, isAuth, getUserByToken, getToken };
+module.exports = { isAuth, getUserByToken, getToken };
