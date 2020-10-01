@@ -14,7 +14,7 @@ secrets:
   pro: ${ssm:/aws/reference/secretsmanager/${self:service.name}-${self:provider.stage}~true}
   local: ${ssm:/aws/reference/secretsmanager/${self:service.name}-dev~true}
 deployment:
-  bucket: aws-handson-deployments-${self:provider.stage}
+  bucket: aws-handson-david-deployments-${self:provider.stage}
   folder: ${self:service}-${self:provider.stage}
 cors:
   local: true

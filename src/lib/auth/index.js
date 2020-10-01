@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 const { intersection } = require('lodash');
 const { AUTH_TOKEN_SECRET, AUTH_TOKEN_DURATION } = require('constants');
 
@@ -26,25 +25,6 @@ function isAuth (userRoles = [], roles = []) {
     } else {
         return true;
     }
-}
-
-function getHash({ text }) {
-    return new Promise((resolve, reject) => {
-        const saltRounds = 10;
-        bcrypt.genSalt(saltRounds, (err, salt) => {
-            bcrypt.hash(text, salt, (err, hash) => {
-                return err ? reject(err) : resolve({ hash });
-            });
-        });
-    });
-}
-
-function checkHash({ text, hash }) {
-    return new Promise((resolve, reject) => {
-        bcrypt.compare(text, hash, (err, result) => {
-            return err ? reject(err) : resolve({ result });
-        });
-    });
 }
 
 module.exports = { getHash, checkHash, isAuth, getUserByToken, getToken };
