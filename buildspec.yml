@@ -21,4 +21,5 @@ phases:
     commands:
     - echo Deploy started on `date`
     - npm run deploy:$DEPLOY_ENV
+    - echo 'fin'
     - echo Build completed on `date`
