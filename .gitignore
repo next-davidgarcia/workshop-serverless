@@ -5,3 +5,4 @@ deploy.out
 config
 node_modules
 .old.serverless
+coverage
