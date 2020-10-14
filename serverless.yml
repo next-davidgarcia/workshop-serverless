@@ -1,5 +1,5 @@
 service: ${file(./package.json):name}
-frameworkVersion: ">=1.34.0 <2.0.0"
+frameworkVersion: ">2.0.0"
 package:
   individually: false
 custom: ${file(./serverless-app/custom.yml)}

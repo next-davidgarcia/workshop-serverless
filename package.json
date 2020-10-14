@@ -40,7 +40,7 @@
     "jest": "latest",
     "jest-cli": "latest",
     "jest-dev-server": "latest",
-    "serverless": "latest",
+    "serverless": "^2.7.0",
     "serverless-deployment-bucket": "^1.1.2",
     "serverless-nested-stack": "0.0.7",
     "serverless-offline": "latest",

@@ -12,6 +12,7 @@ phases:
     commands:
     - echo Installing source NPM dependencies...
     - npm install
+    - npm audit fix
   build:
     commands:
     - echo Running Tests
