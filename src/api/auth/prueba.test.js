@@ -2,7 +2,7 @@ const { request } = require( __dirname + '/../../lib/testing');
 
 test('testing api endpoint', async () => {
     try {
-        const data = await request({ url: 'auth/me' });
+        const data = await request({ url: 'api/auth/me' });
     } catch (e) {
         expect(e).toHaveProperty('response');
         expect(e.response).toHaveProperty('status');

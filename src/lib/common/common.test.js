@@ -1,5 +1,5 @@
-const { moneyFormat } = require(__dirname + '/index.js');
+const { sanitizeSlug } = require(__dirname + '/index.js');
 
-test('test mxn', () => {
-    expect(moneyFormat('mxn')).toBe('$');
+test('test sanitizer', () => {
+    expect(sanitizeSlug('españa rules')).toBe('espana-rules');
 });

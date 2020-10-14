@@ -17,6 +17,7 @@
     "test-local-server": "AWS_SDK_LOAD_CONFIG=true serverless offline --port 3000",
     "test-ci-server": "AWS_SDK_LOAD_CONFIG=true serverless offline --port 3000",
     "test": "jest",
+    "coverage": "jest --coverage",
     "test-ci": "node ./src/testing/jest.js"
   },
   "dependencies": {
@@ -50,7 +51,19 @@
   "jest": {
     "verbose": true,
     "globalSetup": "./src/testing/global-setup.js",
-    "globalTeardown": "./src/testing/global-teardown.js"
+    "globalTeardown": "./src/testing/global-teardown.js",
+    "coverageThreshold": {
+      "./src/": {
+        "branches": 40,
+        "statements": 40
+      },
+      "./src/lib/common/index.js": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    }
   },
   "_moduleAliases": {
     "lib": "src/lib",

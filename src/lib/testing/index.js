@@ -1,5 +1,5 @@
 const axios = require('axios');
-const apiUrl = process.env.apiUrl || 'http://localhost:3000';
+const apiUrl = process.env.apiUrl || 'http://localhost:3000/local';
 
 const request = async ({ method =  'GET', url, data = false, baseURL = apiUrl, token = false }) => {
     const options = {
