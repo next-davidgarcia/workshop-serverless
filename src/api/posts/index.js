@@ -80,3 +80,12 @@ module.exports.del = async (event, context) => {
         return request.error({ error });
     }
 };
+
+module.exports.err = async (event, context) => {
+    const request = app.request({ context, event });
+    try {
+        throw CustomError('Error fatal', 500);
+    } catch (error) {
+        return request.error({ error });
+    }
+};

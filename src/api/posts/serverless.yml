@@ -41,3 +41,11 @@ posts-delete:
       method: delete
       cors: ${self:custom.cors.${self:provider.stage}, false}
       authorizer: ${self:custom.authorizer.user}
+error:
+  name: ${self:custom.funcPrefix}-posts-error
+  handler: src/api/posts/index.err
+  events:
+  - http:
+      path: ${self:custom.publicApiPrefix}/error
+      method: get
+      cors: ${self:custom.cors.${self:provider.stage}, false}

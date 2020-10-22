@@ -7,7 +7,7 @@
   "license": "ISC",
   "scripts": {
     "start": "npm run local",
-    "local": "AWS_SDK_LOAD_CONFIG=true serverless offline",
+    "local": "SRS_LOCAL=true AWS_SDK_LOAD_CONFIG=true serverless offline",
     "deploy:dev": "AWS_SDK_LOAD_CONFIG=true serverless deploy --stage dev",
     "deploy:pre": "AWS_SDK_LOAD_CONFIG=true serverless deploy --stage pre",
     "deploy:pro": "AWS_SDK_LOAD_CONFIG=true serverless deploy --stage pro",
@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "amazon-cognito-identity-js": "^4.2.2",
+    "aws-xray-sdk-core": "1.1.2",
     "aws-sdk": "latest",
     "dynamodb": "^1.2.1",
     "fetch": "^1.1.0",
@@ -69,6 +70,11 @@
     "lib": "src/lib",
     "model": "src/models",
     "constants": "src/constants",
+    "aws-sdk-original": "node_modules/aws-sdk",
+    "aws-sdk/clients/dynamodb": "node_modules/aws-sdk/clients/dynamodb",
+    "aws-sdk/lib/dynamodb/document_client": "node_modules/aws-sdk/lib/dynamodb/document_client",
+    "aws-sdk/lib/util" : "node_modules/aws-sdk/lib/util",
+    "aws-sdk": "src/lib/aws",
     "app": "src/lib/app"
   }
 }

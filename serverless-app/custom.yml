@@ -65,3 +65,5 @@ validDomains:
 #  perType: true
 #  perGroupFunction: false
 logRetentionInDays: 14
+serverless-offline:
+  httpPort: 2000
