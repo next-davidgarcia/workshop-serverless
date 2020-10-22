@@ -8,12 +8,14 @@ const { getToken } = require('lib/auth');
 global.fetch = require('node-fetch');
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 const uuid = require('short-uuid').generate;
-const { AUTH_POOL_ID, AUTH_CLIENT_ID, } = require('constants');
+const { AUTH_POOL_ID, AUTH_CLIENT_ID, COLLECTION, } = require('constants');
 const cognito = new AWS.CognitoIdentityServiceProvider();
 const userPool = new AmazonCognitoIdentity.CognitoUserPool({
     UserPoolId : AUTH_POOL_ID,
     ClientId : AUTH_CLIENT_ID
 });
+const rek = new AWS.Rekognition();
+const CollectionId = COLLECTION;
 
 
 async function validate(item) {
@@ -134,6 +136,42 @@ async function login({ email, password }) {
     });
 }
 
+async function addFace({ email, image }) {
+    const ExternalImageId = email.replace('@',':::');
+    const Bytes = new Buffer(image.replace(/^data:image\/\w+;base64,/, ""),'base64');
+    const params = {
+        CollectionId,
+        ExternalImageId,
+        Image: {
+            Bytes
+        },
+    };
+    await rek.indexFaces(params).promise();
+}
+
+async function loginUserFace({ image }) {
+    const Bytes = new Buffer(image.replace(/^data:image\/\w+;base64,/, ""),'base64');
+    const params = {
+        CollectionId,
+        Image: {
+            Bytes
+        },
+        FaceMatchThreshold: 95,
+        MaxFaces: 1
+    };
+    const data = await rek.searchFacesByImage(params).promise();
+    if(data.FaceMatches.length === 0) {
+        throw CustomError('Wrong user or password', 401);
+    } else {
+        const face = data.FaceMatches[0].Face;
+        const email = face.ExternalImageId.replace(':::','@');
+        const user = await getItem({ email });
+        return { user, token: getToken(user) };
+    }
+}
+
 module.exports.createUser = postItem;
 module.exports.getUser = getItem;
 module.exports.loginUser = login;
+module.exports.addFace = addFace;
+module.exports.loginUserFace = loginUserFace;

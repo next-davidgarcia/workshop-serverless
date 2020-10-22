@@ -23,3 +23,20 @@ auth-me:
       method: get
       cors: ${self:custom.cors.${self:provider.stage}, false}
       authorizer: ${self:custom.authorizer.user}
+auth-add-face:
+  name: ${self:custom.funcPrefix}-auth-add-face
+  handler: src/api/auth/index.addFace
+  events:
+  - http:
+      path: ${self:custom.publicApiPrefix}/auth/add-face
+      method: post
+      cors: ${self:custom.cors.${self:provider.stage}, false}
+      authorizer: ${self:custom.authorizer.user}
+auth-login-face:
+  name: ${self:custom.funcPrefix}-auth-login-face
+  handler: src/api/auth/index.loginFace
+  events:
+  - http:
+      path: ${self:custom.publicApiPrefix}/auth/login-face
+      method: post
+      cors: ${self:custom.cors.${self:provider.stage}, false}

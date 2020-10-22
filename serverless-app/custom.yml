@@ -4,7 +4,6 @@ region:
   dev: us-east-1
   pre: us-east-1
   pro: us-east-1
-
 stage: ${self:provider.stage}
 varPrefix: next-handson-${self:provider.stage}
 publicApiPrefix: api
@@ -22,6 +21,8 @@ cors:
   pre: false
   pro: false
 resources:
+  bucket: handson-cosas-chidas
+  collection: handson-cosas-chidas
   userPool:
     local: 'us-east-1_okkcmFnNz'
     dev: 'us-east-1_okkcmFnNz'

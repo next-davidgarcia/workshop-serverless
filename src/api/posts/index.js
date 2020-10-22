@@ -1,6 +1,6 @@
 require('module-alias/register');
 const app = require('app');
-const { listPosts, getPost, createPost, updatePost, deletePost } = require('model/posts');
+const { listPosts, getPost, createPost, updatePost, deletePost, readPost, analyzePost } = require('model/posts');
 const CustomError = app.error;
 
 
@@ -89,3 +89,43 @@ module.exports.err = async (event, context) => {
         return request.error({ error });
     }
 };
+
+
+module.exports.readPost = async (event, context) => {
+    const request = app.request({ context, event });
+    try {
+        const { slug } = request.params;
+        const { item } = await getPost({ slug });
+        if (item !== null) {
+            const { url } = await readPost({ item });
+            return request.response({
+                code: 200,
+                data: { url },
+            });
+        } else {
+            throw CustomError('Not found', 404);
+        }
+    } catch (error) {
+        return request.error({ error });
+    }
+};
+
+module.exports.analyzePost = async (event, context) => {
+    const request = app.request({ context, event });
+    try {
+        const { slug } = request.params;
+        const { item } = await getPost({ slug });
+        if (item !== null) {
+            const data = await analyzePost({ item });
+            return request.response({
+                code: 200,
+                data,
+            });
+        } else {
+            throw CustomError('Not found', 404);
+        }
+    } catch (error) {
+        return request.error({ error });
+    }
+};
+

@@ -1,9 +1,14 @@
 require('module-alias/register');
 const app = require('app');
 const Joi = require('joi');
+const AWS = require('aws-sdk');
 const { sanitizeSlug } = require('lib/common');
 const CustomError = app.error;
 const { Schema, Posts } = require(__dirname + '/Schema');
+const { BUCKET, } = require('constants');
+const s3 = new AWS.S3();
+const Bucket = BUCKET;
+const polly = new AWS.Polly();
 
 async function deleteItem({ slug }) {
     return new Promise((resolve, reject) => {
@@ -102,9 +107,43 @@ async function postItem({ item }) {
     }
 }
 
+async function saveAudiioFile({ Key, Text }) {
+    return new Promise((resolve, reject) => {
+        const params = { Bucket, Key };
+        s3.headObject(params, async (err) => {
+            if (err && err.code === 'NotFound') {
+                try {
+                    const params = { OutputFormat: 'mp3', SampleRate: '8000', Text, TextType: 'text', VoiceId: 'Mia' };
+                    const data = await polly.synthesizeSpeech(params).promise();
+                    const Body = data.AudioStream;
+                    const ContentType = 'audio/mpeg';
+                    await s3.putObject({ Bucket, Key, Body, ContentType }).promise();
+                } catch (e) {
+                    reject(e);
+                }
+            }
+            resolve();
+        });
+    });
+}
+
+async function readPost({ item }) {
+    const Expires = 3600;
+    const Key = `audios/${ item.slug }.mp3`;
+    const Text = `<emphasis>${ item.title }</emphasis><break>${ item.text }`;
+    await saveAudiioFile({ Key, Text });
+    return { url: s3.getSignedUrl('getObject', { Bucket, Key, Expires }) };
+}
+
+async function analyzePost({ item }) {
+
+}
+
 module.exports.createPost = postItem;
 module.exports.updatePost = putItem;
 module.exports.getPost = getItem;
 module.exports.listPosts = list;
 module.exports.deletePost = deleteItem;
+module.exports.readPost = readPost;
+module.exports.analyzePost = analyzePost;
 

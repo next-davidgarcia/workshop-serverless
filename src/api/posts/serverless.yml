@@ -49,3 +49,19 @@ error:
       path: ${self:custom.publicApiPrefix}/error
       method: get
       cors: ${self:custom.cors.${self:provider.stage}, false}
+posts-read-post:
+  name: ${self:custom.funcPrefix}-posts-read-poost
+  handler: src/api/posts/index.readPost
+  events:
+  - http:
+      path: ${self:custom.publicApiPrefix}/posts/{slug}/read
+      method: get
+      cors: ${self:custom.cors.${self:provider.stage}, false}
+posts-analyze-post:
+  name: ${self:custom.funcPrefix}-posts-analyze-poost
+  handler: src/api/posts/index.analyzePost
+  events:
+  - http:
+      path: ${self:custom.publicApiPrefix}/posts/{slug}/analyze
+      method: get
+      cors: ${self:custom.cors.${self:provider.stage}, false}

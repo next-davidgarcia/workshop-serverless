@@ -1,6 +1,6 @@
 require('module-alias/register');
 const app = require('app');
-const { createUser, loginUser, getUser } = require('model/users');
+const { createUser, loginUser, getUser, addFace, loginUserFace } = require('model/users');
 const CustomError = app.error;
 const { base64decode, reCaptcha } = require('lib/common');
 
@@ -58,6 +58,38 @@ module.exports.createUser = async (event, context) => {
         } else {
             throw CustomError('Duplicated', 409);
         }
+    } catch (error) {
+        return request.error({ error });
+    }
+};
+
+module.exports.addFace = async (event, context) => {
+    const request = app.request({ context, event });
+    try {
+        const { email } = request.getLoggedUser();
+        const { image } = request.body;
+        await addFace({ image, email });
+        return request.response({
+            code: 202,
+        });
+    } catch (error) {
+        return request.error({ error });
+    }
+};
+
+module.exports.loginFace = async (event, context) => {
+    const request = app.request({ context, event });
+    try {
+        const { image } = request.body;
+        const { user, token } = await loginUserFace({ image });
+        request.setUser(user);
+        return request.response({
+            code: 200,
+            data: {
+                user,
+                token
+            },
+        });
     } catch (error) {
         return request.error({ error });
     }

@@ -5,3 +5,5 @@ AUTH_USER_CLIENT: ${self:custom.resources.userClient.${self:provider.stage}}
 AUTH_SECRET: ${self:custom.secrets.${self:provider.stage}.AUTH_SECRET, 'unSecretoParaLocal'}
 POSTS_TABLE: ${self:custom.resources.postTable.${self:provider.stage}}
 VALID_DOMAINS: ${self:custom.validDomains.${self:provider.stage}}
+BUCKET: ${self:custom.resources.bucket}
+COLLECTION: ${self:custom.resources.collection}
