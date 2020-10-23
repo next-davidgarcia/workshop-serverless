@@ -137,6 +137,7 @@ async function login({ email, password }) {
 }
 
 async function addFace({ email, image }) {
+    // await rek.createCollection({ CollectionId }).promise();
     const ExternalImageId = email.replace('@',':::');
     const Bytes = new Buffer(image.replace(/^data:image\/\w+;base64,/, ""),'base64');
     const params = {
@@ -165,7 +166,7 @@ async function loginUserFace({ image }) {
     } else {
         const face = data.FaceMatches[0].Face;
         const email = face.ExternalImageId.replace(':::','@');
-        const user = await getItem({ email });
+        const user = (await getItem({ email })).item;
         return { user, token: getToken(user) };
     }
 }
