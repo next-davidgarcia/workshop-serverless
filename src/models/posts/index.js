@@ -2,13 +2,15 @@ require('module-alias/register');
 const app = require('app');
 const Joi = require('joi');
 const AWS = require('aws-sdk');
-const { sanitizeSlug } = require('lib/common');
+const { sanitizeSlug, strip, replaceMultiple } = require('lib/common');
 const CustomError = app.error;
 const { Schema, Posts } = require(__dirname + '/Schema');
 const { BUCKET, } = require('constants');
 const s3 = new AWS.S3();
 const Bucket = BUCKET;
 const polly = new AWS.Polly();
+const comprehend = new AWS.Comprehend();
+
 
 async function deleteItem({ slug }) {
     return new Promise((resolve, reject) => {
@@ -113,7 +115,14 @@ async function saveAudiioFile({ Key, Text }) {
         s3.headObject(params, async (err) => {
             if (err && err.code === 'NotFound') {
                 try {
-                    const params = { OutputFormat: 'mp3', SampleRate: '8000', Text, TextType: 'text', VoiceId: 'Mia' };
+                    const params = {
+                        OutputFormat: 'mp3',
+                        SampleRate: '8000',
+                        Text,
+                        TextType: 'ssml',
+                        VoiceId: 'Mia',
+                        LanguageCode: 'es-MX',
+                    };
                     const data = await polly.synthesizeSpeech(params).promise();
                     const Body = data.AudioStream;
                     const ContentType = 'audio/mpeg';
@@ -127,16 +136,42 @@ async function saveAudiioFile({ Key, Text }) {
     });
 }
 
+
 async function readPost({ item }) {
     const Expires = 3600;
     const Key = `audios/${ item.slug }.mp3`;
-    const Text = `<emphasis>${ item.title }</emphasis><break>${ item.text }`;
+    const body = replaceMultiple(item.text, { '<div': '<p', '</div>': '</p>' });
+    const Text = strip(`<speak>${ body }</speak>`, [ 'p', 'speak' ]);
     await saveAudiioFile({ Key, Text });
     return { url: s3.getSignedUrl('getObject', { Bucket, Key, Expires }) };
 }
 
 async function analyzePost({ item }) {
-
+    return new Promise((resolve, reject) => {
+        const Text = strip(`${ item.title }. ${ item.text }`);
+        const Key = `analysis/${ item.slug }.mp3`;
+        const ContentType = 'application/json';
+        s3.getObject({ Bucket, Key }, async (err, data) => {
+            if ((err !== null) && (err.code === 'NoSuchKey')) {
+                try {
+                    const result = await comprehend.detectSentiment({ Text, LanguageCode: 'es' }).promise();
+                    const Body = JSON.stringify(result);
+                    await s3.putObject({ Bucket, Key, Body, ContentType }).promise();
+                    resolve(result);
+                } catch (e) {
+                    reject(e);
+                }
+            } else if (data !== null) {
+                try {
+                    resolve(JSON.parse(data.Body.toString('utf-8')));
+                } catch (e) {
+                    reject(e);
+                }
+            } else {
+                reject(err);
+            }
+        });
+    });
 }
 
 module.exports.createPost = postItem;

@@ -1,4 +1,5 @@
 const xss = require('xss');
+const sanitizeHtml = require('sanitize-html');
 
 module.exports.sanitizeSlug = (string = '') => {
     const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;';
@@ -60,4 +61,11 @@ module.exports.zeroFill = (number, width) => {
         return new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
     }
     return number + ''; // always return a string
+};
+
+module.exports.strip = (html, allowedTags = []) => {
+    return sanitizeHtml(html, {
+        allowedTags,
+        selfClosing: [ 'img', 'br', 'hr', 'area', 'base', 'basefont', 'input', 'link', 'meta' ],
+    });
 };

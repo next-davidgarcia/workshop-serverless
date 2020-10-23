@@ -50,7 +50,7 @@ error:
       method: get
       cors: ${self:custom.cors.${self:provider.stage}, false}
 posts-read-post:
-  name: ${self:custom.funcPrefix}-posts-read-poost
+  name: ${self:custom.funcPrefix}-posts-read-post
   handler: src/api/posts/index.readPost
   events:
   - http:
